@@ -21,7 +21,7 @@
 
 
 ### 注册接口
-  http://134.175.52.84/api/register
+  http://134.175.52.84:3000/api/register
 
   参数：username
        email
@@ -29,7 +29,7 @@
 
 ### 登入接口
 
-   http://134.175.52.84/api/login
+   http://134.175.52.84:3000/api/login
 
    参数：email
          password
