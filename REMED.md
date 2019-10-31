@@ -18,3 +18,19 @@
 ### 编写项目在分支 youzi 上操作
 
 已新建分支youzi
+
+
+### 注册接口
+  http://134.175.52.84/api/register
+
+  参数：username
+       email
+       password
+
+### 登入接口
+
+   http://134.175.52.84/api/login
+
+   参数：email
+         password
+
