@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { NavLink } from 'react-router-dom';
 import './styles.less';
 // 首页布局
 class BasicLayout extends React.Component {
@@ -7,22 +8,22 @@ class BasicLayout extends React.Component {
       <div className="page-home">
         <div className="layout-home">{this.props.children}</div>
         <ul>
-          <li>
+          <NavLink to="/" exact>
             <i className="iconfont icon-1"></i>
             <span>首页</span>
-          </li>
-          <li>
+          </NavLink>
+          <NavLink to="/home/category">
             <i className="iconfont icon-fenlei"></i>
             <span>分类</span>
-          </li>
-          <li>
+          </NavLink>
+          <NavLink to="/home/article">
             <i className="iconfont icon-shuji"></i>
             <span>校园动态</span>
-          </li>
-          <li>
+          </NavLink>
+          <NavLink to="/home/center">
             <i className="iconfont icon-wode"></i>
             <span>我的</span>
-          </li>
+          </NavLink>
         </ul>
       </div>
     );
