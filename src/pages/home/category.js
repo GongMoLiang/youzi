@@ -5,11 +5,10 @@ import React from 'react';
 import './category.less';
 import axios from 'axios';
 
-let height = (document.body.clientHeight - 100) / 37.5 + 'rem';
-
 class Category extends React.PureComponent {
   state = {
     categorylist: [],
+    id: 0,
   };
   getcategorylist() {
     axios.post('https://api.youzixy.com/ebapi/store_api/get_product_category').then(response => {
@@ -19,19 +18,35 @@ class Category extends React.PureComponent {
       });
     });
   }
-  z;
+  handlecategory(index) {
+    let top = this.refs.right.children[index].children[0].offsetTop;
+    this.refs.right.style.top = -top + 'px';
+    this.setState({
+      id: index,
+    });
+  }
   render() {
-    let { categorylist } = this.state;
+    let { categorylist, id } = this.state;
     return (
       <div className="category">
         <h1>商城分类</h1>
-        <div className="content" style={{ height: height }}>
+        <div className="content">
           <ul className="left">
-            {categorylist.map(item => {
-              return <li key={item.id}>{item.cate_name}</li>;
-            })}
+            <div>
+              {categorylist.map((item, index) => {
+                return (
+                  <li
+                    key={index}
+                    onClick={this.handlecategory.bind(this, index)}
+                    className={id === index ? 'active' : ''}
+                  >
+                    {item.cate_name}
+                  </li>
+                );
+              })}
+            </div>
           </ul>
-          <ul className="right">
+          <ul className="right" ref="right">
             {categorylist.map(item => {
               return (
                 <li key={item.id}>
