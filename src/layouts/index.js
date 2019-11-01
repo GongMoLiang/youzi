@@ -7,7 +7,7 @@ class BasicLayout extends React.Component {
     return (
       <div className="page-home">
         <div className="layout-home">{this.props.children}</div>
-        <ul>
+        <ul className="tapbar">
           <NavLink to="/" exact>
             <i className="iconfont icon-1"></i>
             <span>首页</span>

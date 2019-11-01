@@ -24,8 +24,8 @@
   http://134.175.52.84:3000/api/register
 
   参数：username
-       email
-       password
+        email
+        password
 
 ### 登入接口
 
@@ -34,3 +34,7 @@
    参数：email
          password
 
+### 本项目通过vscode 的cssrem插件来解决移动rem的问题
+
+1. 已近引入了flexble.js获取根字号大小
+2. 将cssrem插件配置为75
