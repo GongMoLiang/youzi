@@ -1,0 +1,130 @@
+.page_school {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .school_title {
+    height: 1.173333rem;
+    padding: 0.186667rem 0.08rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 999;
+    background: #fff;
+    width: 100%;
+
+    .left .icon-fanhui {
+      font-size: 0.666667rem;
+      color: #000;
+    }
+
+    .center {
+      font-size: 0.426667rem;
+      font-weight: bolder;
+      color: #000;
+      width: 6.293333rem;
+      text-align: center;
+    }
+
+    .right {
+      font-size: 0.373333rem;
+      color: #000;
+      margin: 0 0.133333rem 0 0;
+    }
+  }
+  .main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: auto;
+
+    .searchBar {
+      height: 1.653333rem;
+      padding: 0.4rem;
+
+      input {
+        border: none;
+        border-radius: 0.4rem;
+        background: #f2f5f7;
+      }
+    }
+
+    .schoolList {
+      position: relative;
+      display: flex;
+      flex: 1;
+
+      .leftList {
+        position: relative;
+        flex: 1;
+        overflow: hidden;
+        .shcool_index {
+          .label {
+            height: 0.88rem;
+            font-size: 0.346667rem;
+            background: #f2f5f7;
+            color: #999;
+            padding: 0 0.4rem;
+            margin: 0;
+            line-height: 0.88rem;
+          }
+          ul {
+            padding: 0 0 0 0.4rem;
+            margin: 0;
+            li {
+              height: 2.24rem;
+              padding: 0.32rem 0 0.32rem 0;
+              display: flex;
+              border-bottom: 0.026667rem solid #f6f6f6;
+
+              .schoolLogo {
+                img {
+                  width: 1.6rem;
+                  height: 1.6rem;
+                  border-radius: 1.333333rem;
+                }
+              }
+
+              .school_info {
+                padding: 0 0 0 0.4rem;
+
+                h2 {
+                  font-size: 0.453333rem;
+                  color: #333;
+                  margin: 0;
+                  padding: 0 0 0.133333rem 0;
+                }
+
+                p {
+                  font-size: 0.373333rem;
+                  color: #7a7a7a;
+                  margin: 0;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  width: 6.8rem;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .rightList {
+        position: absolute;
+        right: 0.133333rem;
+        height: 100%;
+        position: fixed;
+        ul {
+          top: 1.76rem;
+          li {
+            font-size: 0.32rem;
+            color: #000;
+            height: 0.56rem;
+            margin: 0 0.133333rem 0 0;
+          }
+        }
+      }
+    }
+  }
+}
