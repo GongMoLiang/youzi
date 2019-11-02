@@ -4,7 +4,8 @@
 
 import React from 'react';
 import './index.less';
-import { Form, Input, Button } from 'antd';
+import router from 'umi/router';
+import { Form, Input, Button, message } from 'antd';
 import { connect } from 'dva';
 import axios from 'axios';
 
@@ -22,29 +23,24 @@ class Register extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // 校验通过
-        console.log(values);
-
         // 发送请求之前
         this.setState({
           loading: true,
         });
         // 发送请求
-        this.props.handleLogin(values, isOk => {
+        this.props.handleRegister(values, isOk => {
           // 发送请求完成
           this.setState({
             loading: false,
           });
 
           if (isOk) {
-            // 登录成功，跳转到首页
-            // router.replace('/');
-            console.log('ok了');
+            // 注册成功，跳转到登录页
+            router.replace('/login');
           }
         });
       }
     });
-
-    //手动校验
   };
 
   render() {
@@ -102,25 +98,26 @@ class Register extends React.Component {
 export default connect(
   null,
   dispatch => ({
-    handleLogin(values, callback) {
+    handleRegister(values, callback) {
       axios
         .post('http://134.175.52.84:3000/api/register', values)
         .then(response => {
           let result = response.data;
-          if (result.code === 0) {
-            //注册成功
+          if (result.code !== 0) {
+            message.error('注册失败，用户名或邮箱已存在');
+            callback && callback(false);
+            return;
           }
-          // 存储
-          window.localStorage.setItem('userInfo', JSON.stringify(values));
-
+          message.success('恭喜你,注册成功');
+          //注册成功
           dispatch({
             type: 'global/register',
-            // userInfo: result,
+            userInfo: values,
           });
-
           callback && callback(true);
         })
         .catch(() => {
+          message.error('注册失败,请重新注册');
           callback && callback(false);
         });
     },

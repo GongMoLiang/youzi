@@ -2,6 +2,7 @@ import React from 'react';
 import './center.less';
 import photo from '../../assets/photo.png';
 import Link from 'umi/link';
+import { connect } from 'dva';
 
 const toolBarList = [
   { icon: 'icon-shoucang', title: '我的收藏' },
@@ -20,6 +21,7 @@ const toolBarList = [
 
 class Category extends React.Component {
   render() {
+    // console.log(this.props.userInfo);
     return (
       <div className="center-page">
         {/* 设置 */}
@@ -33,7 +35,7 @@ class Category extends React.Component {
             <img src={photo} alt="" />
           </div>
           <div className="signin-right">
-            <Link to="/login">登录</Link>
+            <Link to="/login">请登录</Link>
             <p>登录更精彩</p>
           </div>
         </div>
@@ -88,4 +90,11 @@ class Category extends React.Component {
   }
 }
 
-export default Category;
+export default connect(
+  state => {
+    return {
+      userInfo: state.userInfo,
+    };
+  },
+  null,
+)(Category);

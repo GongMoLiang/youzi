@@ -4,10 +4,11 @@
 
 import React from 'react';
 import './index.less';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import Link from 'umi/link';
-// import { connect } from 'dva';
-// import axios from 'axios';
+import { connect } from 'dva';
+import axios from 'axios';
+import router from 'umi/router';
 
 class Login extends React.Component {
   state = {
@@ -21,31 +22,27 @@ class Login extends React.Component {
   hanldeSubmit = e => {
     // 1. 阻止表单默认行为
     e.preventDefault();
-    // this.props.form.validateFields((err, values) => {
-    //   if (!err) {
-    //     // 校验通过
-    //     console.log(values);
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        // 校验通过
 
-    //     // 发送请求之前
-    //     this.setState({
-    //       loading: true,
-    //     });
-    //     // 发送请求
-    //     this.props.handleLogin(values, isOk => {
-    //       // 发送请求完成
-    //       this.setState({
-    //         loading: false,
-    //       });
+        // 发送请求之前
+        this.setState({
+          loading: true,
+        });
+        // 发送请求
+        this.props.handleLogin(values, isOk => {
+          // 发送请求完成
+          this.setState({
+            loading: false,
+          });
 
-    //       if (isOk) {
-    //         // 登录成功，跳转到首页
-    //         console.log(this.props);
-    //       }
-    //     });
-    //   }
-    // });
-
-    //手动校验
+          if (isOk) {
+            router.replace('/');
+          }
+        });
+      }
+    });
   };
 
   render() {
@@ -72,16 +69,17 @@ class Login extends React.Component {
                 { required: true, message: '请输入密码' },
                 { min: 6, max: 15, message: '长度在6-15之间' },
               ],
-            })(<Input placeholder="请输入密码" size="large" />)}
+            })(<Input type="password" placeholder="请输入密码" size="large" />)}
           </Form.Item>
           <Form.Item className="remember">
             {getFieldDecorator('remember', {
               valuePropName: 'checked',
               initialValue: false,
-            })(<Checkbox>记住我</Checkbox>)}
-            <p>
-              没有账号?去<Link to="/register">注册</Link>
-            </p>
+            })(
+              <p>
+                没有账号?去<Link to="/register">注册</Link>
+              </p>,
+            )}
           </Form.Item>
           <Form.Item>
             <Button
@@ -99,31 +97,32 @@ class Login extends React.Component {
     );
   }
 }
-export default Form.create()(Login);
-// export default connect(
-//   null,
-//   dispatch => ({
-//     handleLogin(values, callback) {
-//       axios
-//         .post('http://134.175.52.84:3000/api/login', values)
-//         .then(response => {
-//           console.log(response);
-//           let result = response.data;
-
-//           // 存储
-//           // window.localStorage.setItem('userInfo', JSON.stringify(result.user));
-//           window.localStorage.setItem('userInfo', '张三三');
-
-//           dispatch({
-//             // type: 'global/login',
-//             userInfo: result.user,
-//           });
-
-//           callback && callback(true);
-//         })
-//         .catch(() => {
-//           callback && callback(false);
-//         });
-//     },
-//   }),
-// )(Form.create()(Login));
+export default connect(
+  null,
+  dispatch => ({
+    handleLogin(values, callback) {
+      axios
+        .post('http://134.175.52.84:3000/api/login', values)
+        .then(response => {
+          let result = response.data;
+          if (result.code !== 0) {
+            message.error('邮箱或密码错误');
+            callback && callback(false);
+            return;
+          }
+          message.success('登录成功');
+          // 存储
+          window.localStorage.setItem('userInfo', JSON.stringify(result.userInfo));
+          dispatch({
+            type: 'global/login',
+            userInfo: result.userInfo,
+          });
+          callback && callback(true);
+        })
+        .catch(() => {
+          message.success('登录失败');
+          callback && callback(false);
+        });
+    },
+  }),
+)(Form.create()(Login));
