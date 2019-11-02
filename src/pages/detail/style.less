@@ -15,7 +15,7 @@
     height: 8.213333rem;
     width: 100%;
   }
-  dl {
+  .product {
     margin-top: -0.266667rem;
     background: #fff;
     padding: 0 0.32rem;
@@ -27,6 +27,7 @@
     dd {
       font-size: 0.373333rem;
       color: #6d6d6d;
+      padding-bottom: 0.266667rem;
       .price {
         font-size: 0.48rem;
         color: #fa436a;
@@ -45,6 +46,50 @@
       .browse {
         margin-left: 0.266667rem;
       }
+    }
+  }
+  .auto {
+    background: #fff;
+    margin-top: 0.4rem;
+    padding: 0.266667rem 0.32rem;
+    font-size: 0.373333rem;
+    dt {
+      display: flex;
+      img {
+        width: 0.933333rem;
+        height: 0.933333rem;
+        border-radius: 0.933333rem;
+        margin-right: 0.106667rem;
+      }
+      span {
+        display: block;
+      }
+    }
+    .tag {
+      span {
+        margin: 0 0.106667rem;
+        background: #fa436a;
+        padding: 0.053333rem;
+        color: #fff;
+        border-radius: 0.053333rem;
+        font-size: 0.373333rem;
+      }
+    }
+  }
+  .pingrun {
+    padding: 0.266667rem 0.32rem;
+    font-size: 0.426667rem;
+    background: #fff;
+    margin-bottom: 1.7rem;
+    p {
+      display: flex;
+      justify-content: space-between;
+      :nth-child(2) {
+        color: #07c160;
+      }
+    }
+    :nth-child(2) {
+      justify-content: center;
     }
   }
 }
