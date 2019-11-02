@@ -1,3 +1,6 @@
+/*
+ * title: '校园动态'
+ */
 import React from 'react';
 import './article.less';
 import axios from 'axios';
