@@ -37,9 +37,14 @@ const SimbleLayout = props => {
 
 export default props => {
   let url = props.location.pathname;
-  if (url === '/login' || url === '/register') {
-    return <SimbleLayout {...props}></SimbleLayout>;
-  } else {
+  if (
+    url === '/' ||
+    url === '/home/center' ||
+    url === '/home/article' ||
+    url === '/home/category'
+  ) {
     return <BasicLayout {...props}></BasicLayout>;
+  } else {
+    return <SimbleLayout {...props}></SimbleLayout>;
   }
 };
