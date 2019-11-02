@@ -1,0 +1,148 @@
+.center-page {
+  height: 100%;
+  //头部设置
+  .head {
+    height: 1.333333rem;
+    background: #f06c7a;
+    text-align: right;
+    padding: 0 4%;
+    line-height: 1.333333rem;
+    i {
+      color: #fff;
+      font-size: 0.533333rem;
+      // font-weight: bold;
+    }
+  }
+  // 登录
+  .signin {
+    padding: 0 4%;
+    height: 3.626667rem;
+    background: #f06c7a;
+    border-radius: 0 0 0.4rem 0.4rem;
+    display: flex;
+    .signin-left {
+      width: 2.08rem;
+      height: 2.08rem;
+      margin-right: 0.266667rem;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .signin-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 2.08rem;
+      a {
+        font-size: 0.48rem;
+        color: #fff;
+        margin-bottom: 0.266667rem;
+      }
+      p {
+        color: #eee;
+        font-size: 0.373333rem;
+      }
+    }
+  }
+  // 签到
+  .place {
+    > div {
+      margin: -0.88rem auto 0.266667rem auto;
+      width: 76%;
+      height: 1.6rem;
+      line-height: 1.6rem;
+      padding: 0 4%;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(270deg, #dea96d 0, #f6d59b);
+      box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+      border-radius: 0.186667rem;
+      i {
+        font-size: 0.8rem;
+        color: #f06c7a;
+      }
+      p {
+        flex: 1;
+        color: #796335;
+        font-size: 16px;
+      }
+      span {
+        font-size: 0.373333rem;
+        color: #fcf0d0;
+        display: block;
+        background: #f06c7a;
+        border-radius: 0.08rem;
+        width: 1.6rem;
+        height: 0.586667rem;
+        line-height: 0.586667rem;
+        text-align: center;
+      }
+    }
+  }
+
+  //积分
+  .joinbar {
+    width: 84%;
+    margin: 0.8rem 4% 0.8rem 4%;
+    padding: 0.4rem 4% 0.4rem 4%;
+    background-color: #fff;
+    box-shadow: 0px 0px 0.32rem rgba(0, 0, 0, 0.1);
+    border-radius: 0.186667rem;
+    ul {
+      display: flex;
+      align-items: center;
+      li {
+        flex: 1;
+        text-align: center;
+        i {
+          font-size: 0.48rem;
+          color: #f9a453;
+        }
+        p {
+          margin-top: 0.133333rem;
+          font-size: 0.373333rem;
+          color: #3d3d3d;
+        }
+      }
+    }
+  }
+
+  //工具栏
+  .toolbar {
+    width: 92%;
+    margin: 0.8rem 4% 0.8rem 4%;
+    padding: 0 0 0.266667rem 0;
+    background: #fff;
+    box-shadow: 0px 0px 0.32rem rgba(0, 0, 0, 0.1);
+    border-radius: 0.186667rem;
+    h1 {
+      padding-top: 0.133333rem;
+      margin: 0 0 0.133333rem 3%;
+      font-size: 0.426667rem;
+      height: 1.066667rem;
+    }
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      li {
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.4rem;
+        i {
+          font-size: 0.853333rem;
+          color: #ff4301;
+        }
+        p {
+          margin-top: 0.133333rem;
+          color: #3d3d3d;
+          font-size: 0.373333rem;
+        }
+      }
+    }
+  }
+}
