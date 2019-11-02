@@ -18,6 +18,15 @@ class Category extends React.PureComponent {
       });
     });
   }
+  godetail(id) {
+    // console.log(this.props);
+    this.props.history.push({
+      pathname: '/goods',
+      query: {
+        sid: id,
+      },
+    });
+  }
   handlecategory(index) {
     let top = this.refs.right.children[index].children[0].offsetTop;
     this.refs.right.style.top = -top + 'px';
@@ -54,7 +63,7 @@ class Category extends React.PureComponent {
                   <dl className="product">
                     {item.child.map(arr => {
                       return (
-                        <dd key={arr.id}>
+                        <dd key={arr.id} onClick={this.godetail.bind(this, arr.id)}>
                           <img src={arr.pic} alt="" />
                           <span>{arr.cate_name}</span>
                         </dd>
