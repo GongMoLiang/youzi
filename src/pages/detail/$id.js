@@ -22,6 +22,7 @@ class Detail extends React.PureComponent {
     nickname: '',
   };
   getimglist() {
+    // let id = this.props.location.pathname.str.substr(8);
     xiao
       .post('https://api.youzixy.com/ebapi/store_api/details', {
         id: '2861',
