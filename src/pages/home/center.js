@@ -35,9 +35,10 @@ class Category extends React.Component {
 
   //是否签到
   isArrived = () => {
-    let userInfo = this.props.userInfo;
+    let userInfo = window.localStorage.userInfo;
+    let username = userInfo ? JSON.parse(userInfo).username : '';
     if (userInfo) {
-      cookie.save(`${userInfo.username}Arrived`, `${userInfo.username}Arrived` + today);
+      cookie.save(`${username}Arrived`, `${username}Arrived` + today);
       this.setState({
         arrived: true,
         grade: 10,
@@ -49,14 +50,15 @@ class Category extends React.Component {
     }
   };
   componentDidMount() {
-    let userInfo = this.props.userInfo;
+    let userInfo = window.localStorage.userInfo;
+    let username = userInfo ? JSON.parse(userInfo).username : '';
     // 判断cookie是否有更新，从而判断是否有签到
     if (userInfo) {
-      let cookieNow = cookie.load(`${userInfo.username}Arrived`);
-      let todayCookie = `${userInfo.username}Arrived` + today;
+      let cookieNow = cookie.load(`${username}Arrived`);
+      let todayCookie = `${username}Arrived` + today;
       if (todayCookie !== cookieNow) {
         if (cookieNow) {
-          cookie.remove(`${userInfo.username}Arrived`);
+          cookie.remove(`${username}Arrived`);
           this.setState({
             arrived: false,
           });
@@ -106,7 +108,8 @@ class Category extends React.Component {
 
   render() {
     let userInfo = window.localStorage.getItem('userInfo');
-    const username = userInfo ? userInfo.username : '';
+    console.log(userInfo);
+    let username = userInfo ? JSON.parse(userInfo).username : '';
     return (
       <div className="center-page">
         {/* 未登录弹出层 */}
@@ -202,7 +205,6 @@ class Category extends React.Component {
 
 export default connect(
   state => {
-    console.log(state);
     return {
       userInfo: state.global.userInfo,
     };
