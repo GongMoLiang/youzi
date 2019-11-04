@@ -6,6 +6,10 @@ class Setting extends React.PureComponent {
     this.props.history.goBack();
   };
 
+  goLogin = () => {
+    this.props.history.push('./login');
+  };
+
   render() {
     return (
       <div className="page_setting">
@@ -34,10 +38,18 @@ class Setting extends React.PureComponent {
                 <i className="iconfont icon-iconfontyoujiantou-copy-copy-copy-copy"></i>
               </li>
             </ul>
+          </div>
+        </div>
+
+        <div className="settingContent_1">
+          <div className="about">
             <ul>
               <li>
-                <span>清除缓存</span>
-                <i className="iconfont icon-iconfontyoujiantou-copy-copy-copy-copy"></i>
+                <span>清楚缓存</span>
+                <div className="cathe">
+                  <span>0M</span>
+                  <i className="iconfont icon-iconfontyoujiantou-copy-copy-copy-copy"></i>
+                </div>
               </li>
               <li>
                 <span>关于柚子校园</span>
@@ -49,10 +61,14 @@ class Setting extends React.PureComponent {
               </li>
               <li>
                 <span>当前版本</span>
-                <i className="iconfont icon-iconfontyoujiantou-copy-copy-copy-copy"></i>
+                <i className="versions">3.0.0</i>
               </li>
             </ul>
           </div>
+        </div>
+
+        <div className="loginBtn" onClick={this.goLogin}>
+          <p>登 录</p>
         </div>
       </div>
     );
