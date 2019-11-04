@@ -54,10 +54,12 @@ class Category extends React.Component {
       let cookieNow = cookie.load(`${this.userInfo.username}Arrived`);
       let todayCookie = `${this.userInfo.username}Arrived` + today;
       if (todayCookie !== cookieNow) {
-        cookie.remove(`${this.userInfo.username}Arrived`);
-        this.setState({
-          arrived: false,
-        });
+        if (cookieNow) {
+          cookie.remove(`${this.userInfo.username}Arrived`);
+          this.setState({
+            arrived: false,
+          });
+        }
       } else {
         this.setState({
           arrived: true,
