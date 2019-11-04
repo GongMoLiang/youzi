@@ -14,7 +14,7 @@ class School extends React.PureComponent {
   getSchoolList() {
     axios.get('https://api.youzixy.com/ebapi/merchant_api/get_merchant_list').then(Response => {
       let result = Response.data.data;
-      console.log(result);
+      // console.log(result);
       let arr = [];
       result.forEach(item => {
         let obj = {
@@ -23,11 +23,23 @@ class School extends React.PureComponent {
         };
         arr.push(obj);
       });
-      console.log(arr);
+      // console.log(arr);
       this.setState({
         schoolList: arr,
       });
     });
+  }
+
+  houtui = () => {
+    this.props.history.goBack();
+  };
+
+  zimu(id) {
+    let dom = document.getElementById(`Letter${id}`);
+    let top = dom.offsetTop;
+    let height = this.refs.tip.offsetHeight;
+    // console.log(dom.offsetTop);
+    this.refs.box.scrollTo(0, top + height);
   }
 
   render() {
@@ -35,7 +47,7 @@ class School extends React.PureComponent {
     return (
       <div className="page_school">
         <div className="school_title">
-          <div className="left">
+          <div className="left" onClick={this.houtui}>
             <i className="iconfont icon-fanhui"></i>
           </div>
           <div className="center">
@@ -46,8 +58,8 @@ class School extends React.PureComponent {
           </div>
         </div>
 
-        <div className="main">
-          <div className="searchBar">
+        <div className="main" ref="box">
+          <div className="searchBar" ref="tip">
             <Input placeholder="输入学校简称,关键字或全称" />
           </div>
 
@@ -78,7 +90,7 @@ class School extends React.PureComponent {
               </div>
               {schoolList.map((item, index) => {
                 return (
-                  <div className="shcool_index" key={index}>
+                  <div className="shcool_index" key={index} id={`Letter${item.letter}`}>
                     <p className="label">{item.letter}</p>
                     <ul>
                       {item.list.map(schoolInfo => {
@@ -102,7 +114,11 @@ class School extends React.PureComponent {
             <div className="rightList">
               <ul>
                 {schoolList.map(item => {
-                  return <li>{item.letter}</li>;
+                  return (
+                    <li key={item.letter} onClick={this.zimu.bind(this, item.letter)}>
+                      {item.letter}
+                    </li>
+                  );
                 })}
               </ul>
             </div>
