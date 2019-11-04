@@ -4,6 +4,7 @@ import photo from '../../assets/photo.png';
 import Link from 'umi/link';
 import { connect } from 'dva';
 import { Modal } from 'antd';
+import cookie from 'react-cookies';
 
 const toolBarList = [
   { icon: 'icon-shoucang', title: '我的收藏', link: '/collect' },
@@ -19,6 +20,11 @@ const toolBarList = [
   { icon: 'icon-changyongtubiao-mianxing-', title: '发布求购', link: '/others' },
   { icon: 'icon-shangpin', title: '我的求购', link: '/others' },
 ];
+let d = new Date();
+let year = d.getFullYear();
+let month = d.getMonth() + 1;
+let date = d.getDate();
+let today = year + '' + month + '' + date;
 
 class Category extends React.Component {
   userInfo = this.props.userInfo;
@@ -31,6 +37,7 @@ class Category extends React.Component {
   //是否签到
   isArrived = () => {
     if (this.userInfo) {
+      cookie.save(`${this.userInfo.username}Arrived`, `${this.userInfo.username}Arrived` + today);
       this.setState({
         arrived: true,
         grade: 10,
@@ -41,6 +48,28 @@ class Category extends React.Component {
       });
     }
   };
+  componentDidMount() {
+    // 判断cookie是否有更新，从而判断是否有签到
+    if (this.userInfo) {
+      let cookieNow = cookie.load(`${this.userInfo.username}Arrived`);
+      let todayCookie = `${this.userInfo.username}Arrived` + today;
+      if (todayCookie !== cookieNow) {
+        cookie.remove(`${this.userInfo.username}Arrived`);
+        this.setState({
+          arrived: false,
+        });
+      } else {
+        this.setState({
+          arrived: true,
+          grade: 10,
+        });
+      }
+    } else {
+      this.setState({
+        arrived: false,
+      });
+    }
+  }
 
   //点击li判断是否登录
   handleIsLogin = (index, e) => {
@@ -55,7 +84,7 @@ class Category extends React.Component {
   };
   //没有登录，点击确定去登录
   handleOk = () => {
-    console.log(this.props);
+    // console.log(this.props);
     this.props.history.push('/login');
     this.setState({
       visible: false,
@@ -77,6 +106,7 @@ class Category extends React.Component {
     const username = userInfo ? userInfo.username : '';
     return (
       <div className="center-page">
+        {/* 未登录弹出层 */}
         <Modal
           title="您还没有登录"
           visible={this.state.visible}

@@ -1,3 +1,10 @@
+/**
+ * title: 收藏夹
+ * Routes:
+ *  - /src/routes/PrivateRoute.js
+ *
+ */
+
 import React from 'react';
 import './index.less';
 
