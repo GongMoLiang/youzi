@@ -2,7 +2,7 @@ let userInfo = window.localStorage.getItem('userInfo');
 if (userInfo) {
   userInfo = JSON.parse(userInfo);
   var collect = window.localStorage.getItem(`${userInfo.username}love`);
-  console.log(collect);
+  // console.log(collect);
 }
 
 export default {

@@ -22,6 +22,7 @@ class Detail extends React.PureComponent {
     avatar: '',
     nickname: '',
     opacity: 0,
+    color: '#8a8a8a',
   };
   getimglist() {
     let id = this.props.location.query.id;
@@ -39,7 +40,7 @@ class Detail extends React.PureComponent {
           price: result.price,
           postage: result.postage,
           browse: result.browse,
-          cost: result.cost,
+          cost: Number(result.cost) === 0 ? result.price : result.cost,
           merchant: result.merchant,
           time: result.refresh_time,
           tag: result.keyword ? result.keyword : [],
@@ -50,13 +51,13 @@ class Detail extends React.PureComponent {
   }
 
   goBack = () => {
-    console.log(1);
     this.props.history.goBack();
   };
 
-  // 处理收藏
+  处理收藏;
   handleCollect() {
     let userInfo = window.localStorage.getItem('userInfo');
+    // console.log(userInfo);
     if (userInfo) {
       //用户名存在
       userInfo = JSON.parse(userInfo);
@@ -69,32 +70,71 @@ class Detail extends React.PureComponent {
         title: this.state.title,
         id,
       };
-      if (!collect) {
+      if (!collect || collect === '[]') {
         // 没有收藏过
         let arr = [obj];
+        this.setState({
+          color: 'red',
+        });
         window.localStorage.setItem(`${userInfo.username}love`, JSON.stringify(arr));
       } else {
         // 收藏过
-        console.log(1);
+
         let arr = JSON.parse(collect);
         var flag = false;
-        arr.forEach(item => {
+        arr.forEach((item, index) => {
           if (item.id === obj.id) {
             flag = false;
+            this.setState({
+              color: '#8a8a8a',
+            });
+            arr.splice(index, 1);
+            console.log(arr.length);
+            if (arr === []) {
+              console.log(1);
+              window.localStorage.removeItem(`${userInfo.username}love}`);
+            } else {
+              window.localStorage.setItem(`${userInfo.username}love`, JSON.stringify(arr));
+            }
             return;
           } else {
             flag = true;
           }
         });
-        console.log(flag);
+
         if (flag) {
-          console.log('jinla');
+          this.setState({
+            color: 'red',
+          });
           arr.push(obj);
           window.localStorage.setItem(`${userInfo.username}love`, JSON.stringify(arr));
         }
       }
     } else {
       alert('你还没有登入');
+    }
+  }
+
+  // 页面加载的时候判断收藏状态
+  collectcolor() {
+    let userInfo = window.localStorage.getItem('userInfo');
+
+    if (userInfo) {
+      userInfo = JSON.parse(userInfo);
+      let str = window.localStorage.getItem(`${userInfo.username}love`);
+      console.log(str);
+      if (str) {
+        let id = this.props.location.query.id;
+        let arr = JSON.parse(str);
+        console.log(arr);
+        arr.forEach(item => {
+          if (item.id === id) {
+            this.setState({
+              color: 'red',
+            });
+          }
+        });
+      }
     }
   }
 
@@ -112,11 +152,12 @@ class Detail extends React.PureComponent {
       tag,
       avatar,
       nickname,
+      color,
       opacity,
     } = this.state;
     return (
       <div className="page-detail" onScroll={this.handleScroll}>
-        <Bar fn1={this.handleCollect.bind(this)}></Bar>
+        <Bar fn1={this.handleCollect.bind(this)} color={color}></Bar>
         <span className="back iconfont icon-fanhui" onClick={this.goBack}></span>
         <h1 style={{ opacity: opacity }}>详情展示</h1>
         <Carousel autoplay>
@@ -196,60 +237,7 @@ class Detail extends React.PureComponent {
     this.getimglist();
     let dom = document.getElementById('root');
     dom.addEventListener('scroll', this.handleScroll);
+    this.collectcolor();
   }
 }
-export default connect(
-  null,
-  dispatch => ({
-    handleCollect() {
-      let userInfo = window.localStorage.getItem('userInfo');
-      if (userInfo) {
-        //用户名存在
-        userInfo = JSON.parse(userInfo);
-        let collect = window.localStorage.getItem(`${userInfo.username}love`);
-        let id = this.props.location.query.id;
-        let obj = {
-          imglist: this.state.imglist,
-          price: this.state.price,
-          time: this.state.time,
-          title: this.state.title,
-          id,
-        };
-        if (!collect) {
-          // 没有收藏过
-          let arr = [obj];
-          window.localStorage.setItem(`${userInfo.username}love`, JSON.stringify(arr));
-          dispatch({
-            type: 'collect/detail',
-            collect: arr,
-          });
-        } else {
-          // 收藏过
-          console.log(1);
-          let arr = JSON.parse(collect);
-          var flag = false;
-          arr.forEach(item => {
-            if (item.id === obj.id) {
-              flag = false;
-              return;
-            } else {
-              flag = true;
-            }
-          });
-          console.log(flag);
-          if (flag) {
-            console.log('jinla');
-            arr.push(obj);
-            window.localStorage.setItem(`${userInfo.username}love`, JSON.stringify(arr));
-            dispatch({
-              type: 'collect/detail',
-              collect: arr,
-            });
-          }
-        }
-      } else {
-        alert('你还没有登入');
-      }
-    },
-  }),
-)(Detail);
+export default connect(null)(Detail);

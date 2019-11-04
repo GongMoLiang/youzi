@@ -13,7 +13,7 @@ class Bar extends PureComponent {
           <span>评论</span>
         </li>
         <li onClick={this.props.fn1}>
-          <span className="iconfont icon-shoucang1"></span>
+          <span className="iconfont icon-aixin" style={{ color: this.props.color }}></span>
           <span>收藏</span>
         </li>
         <li>
