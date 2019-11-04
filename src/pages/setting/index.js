@@ -11,6 +11,8 @@ class Setting extends React.PureComponent {
   };
 
   render() {
+    const userInfo = window.localStorage.getItem('userInfo');
+
     return (
       <div className="page_setting">
         <div className="settingHeader">
@@ -21,7 +23,6 @@ class Setting extends React.PureComponent {
             <span>设置</span>
           </div>
         </div>
-
         <div className="settingContent">
           <div className="personalData">
             <ul>
@@ -40,7 +41,6 @@ class Setting extends React.PureComponent {
             </ul>
           </div>
         </div>
-
         <div className="settingContent_1">
           <div className="about">
             <ul>
@@ -66,9 +66,9 @@ class Setting extends React.PureComponent {
             </ul>
           </div>
         </div>
-
         <div className="loginBtn" onClick={this.goLogin}>
-          <p>登 录</p>
+          <p className={userInfo ? 'login' : 'qiut'}>登 录</p>
+          <p className={userInfo ? 'quit' : 'login'}>退出登录</p>
         </div>
       </div>
     );

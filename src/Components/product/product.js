@@ -7,7 +7,7 @@ class Product extends React.PureComponent {
       <li>
         <img src={obj.image} alt="" />
         <p className="title">{obj.store_name}</p>
-        <p className="price">${obj.price}</p>
+        <p className="price">{obj.price}</p>
         <p className="scholl">
           <span>{obj.slogan}</span>
         </p>
