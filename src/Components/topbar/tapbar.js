@@ -5,7 +5,7 @@ class Topbar extends React.PureComponent {
     return (
       <div className="search">
         <div className="topbar">
-          <span className="iconfont icon-fanhui"></span>
+          <span className="iconfont icon-fanhui" onClick={this.props.fn}></span>
           <input type="text" placeholder="搜索商品" />
           <span className="iconfont icon-location"></span>
         </div>

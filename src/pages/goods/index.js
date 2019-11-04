@@ -9,12 +9,13 @@ class Goods extends React.PureComponent {
     goodslist2: [],
   };
   getgoodlist() {
+    console.log(this.props);
     axios
       .post('https://api.youzixy.com/ebapi/store_api/get_product_list', {
         keyword: '',
         limit: 12,
         page: 1,
-        sid: '28',
+        sid: this.props.location.query.sid,
         timeOrder: 'desc',
       })
       .then(response => {
@@ -34,23 +35,19 @@ class Goods extends React.PureComponent {
         });
       });
   }
+  goBack = () => {
+    this.props.history.goBack();
+  };
   render() {
     let { goodslist1, goodslist2 } = this.state;
     return (
       <div className="page-goods">
-        <Topbar></Topbar>
-        <ul className="goodslist">
-          <div className="list-left">
-            {goodslist1.map((item, index) => {
-              return <Product obj={item} key={index}></Product>;
-            })}
-          </div>
-          <div className="list-right">
-            {goodslist2.map(aaa => {
-              return <Product obj={aaa} key={aaa.id}></Product>;
-            })}
-          </div>
-        </ul>
+        <Topbar fn={this.goBack}></Topbar>
+        {goodslist1.length > 0 ? (
+          <List goodslist1={goodslist1} goodslist2={goodslist2} {...this.props}></List>
+        ) : (
+          <Nolist></Nolist>
+        )}
       </div>
     );
   }
@@ -59,4 +56,45 @@ class Goods extends React.PureComponent {
   }
 }
 
+class List extends React.Component {
+  godetial(id) {
+    this.props.history.push({
+      pathname: `/detail/${id}`,
+      query: {
+        id: id,
+      },
+    });
+  }
+  render() {
+    let { goodslist1, goodslist2 } = this.props;
+    return (
+      <ul className="goodslist">
+        <div className="list-left">
+          {goodslist1.map((item, index) => {
+            return (
+              <Product obj={item} key={index} fn={this.godetial.bind(this, item.id)}></Product>
+            );
+          })}
+        </div>
+        <div className="list-right">
+          {goodslist2.map(item => {
+            return (
+              <Product obj={item} key={item.id} fn={this.godetial.bind(this, item.id)}></Product>
+            );
+          })}
+        </div>
+      </ul>
+    );
+  }
+}
+
+class Nolist extends React.PureComponent {
+  render() {
+    return (
+      <div className="nolist">
+        <img src="https://www.youzixy.com/static/icon/noGoods.png" alt="" />
+      </div>
+    );
+  }
+}
 export default Goods;
