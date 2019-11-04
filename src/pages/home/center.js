@@ -108,7 +108,6 @@ class Category extends React.Component {
 
   render() {
     let userInfo = window.localStorage.getItem('userInfo');
-    console.log(userInfo);
     let username = userInfo ? JSON.parse(userInfo).username : '';
     return (
       <div className="center-page">

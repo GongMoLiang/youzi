@@ -16,7 +16,7 @@ class Search extends React.PureComponent {
   getSearch() {
     axios.get('https://api.youzixy.com/ebapi/store_api/hot_search').then(Response => {
       let result = Response.data.data;
-      console.log(result);
+      // console.log(result);
       this.setState({
         searchList: result,
       });
@@ -40,7 +40,7 @@ class Search extends React.PureComponent {
           <Input
             placeholder="搜索关键字"
             prefix={<i className="iconfont icon-sousuo"></i>}
-            autofocus
+            autoFocus
           />
         </div>
 
