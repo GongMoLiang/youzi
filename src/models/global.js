@@ -16,5 +16,8 @@ export default {
     register(state, action) {
       return { ...state, ...{ userInfo: action.userInfo } };
     },
+    delete(state, action) {
+      return { ...state, ...{ userInfo: action.userInfo } };
+    },
   },
 };
