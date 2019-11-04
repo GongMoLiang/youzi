@@ -5,6 +5,7 @@ import React from 'react';
 import Bar from '../../Components/footerfixed/fixed';
 import './style.less';
 import { Carousel } from 'antd';
+import { connect } from 'dva';
 import xiao from 'axios';
 
 class Detail extends React.PureComponent {
@@ -20,16 +21,17 @@ class Detail extends React.PureComponent {
     tag: [],
     avatar: '',
     nickname: '',
+    opacity: 0,
   };
   getimglist() {
-    // let id = this.props.location.pathname.str.substr(8);
+    let id = this.props.location.query.id;
+    // console.log(id);
     xiao
       .post('https://api.youzixy.com/ebapi/store_api/details', {
-        id: '2861',
+        id: id,
       })
       .then(Response => {
         let result = Response.data.data.storeInfo;
-        console.log(result);
         this.setState({
           imglist: result.slider_image,
           title: result.store_name,
@@ -40,12 +42,62 @@ class Detail extends React.PureComponent {
           cost: result.cost,
           merchant: result.merchant,
           time: result.refresh_time,
-          tag: result.keyword,
+          tag: result.keyword ? result.keyword : [],
           avatar: result.avatar,
           nickname: result.nickname,
         });
       });
   }
+
+  goBack = () => {
+    console.log(1);
+    this.props.history.goBack();
+  };
+
+  // 处理收藏
+  handleCollect() {
+    let userInfo = window.localStorage.getItem('userInfo');
+    if (userInfo) {
+      //用户名存在
+      userInfo = JSON.parse(userInfo);
+      let collect = window.localStorage.getItem(`${userInfo.username}love`);
+      let id = this.props.location.query.id;
+      let obj = {
+        imglist: this.state.imglist,
+        price: this.state.price,
+        time: this.state.time,
+        title: this.state.title,
+        id,
+      };
+      if (!collect) {
+        // 没有收藏过
+        let arr = [obj];
+        window.localStorage.setItem(`${userInfo.username}love`, JSON.stringify(arr));
+      } else {
+        // 收藏过
+        console.log(1);
+        let arr = JSON.parse(collect);
+        var flag = false;
+        arr.forEach(item => {
+          if (item.id === obj.id) {
+            flag = false;
+            return;
+          } else {
+            flag = true;
+          }
+        });
+        console.log(flag);
+        if (flag) {
+          console.log('jinla');
+          arr.push(obj);
+          window.localStorage.setItem(`${userInfo.username}love`, JSON.stringify(arr));
+        }
+      }
+    } else {
+      alert('你还没有登入');
+    }
+  }
+
   render() {
     let {
       imglist,
@@ -60,11 +112,13 @@ class Detail extends React.PureComponent {
       tag,
       avatar,
       nickname,
+      opacity,
     } = this.state;
     return (
-      <div className="page-detail">
-        <Bar></Bar>
-        <h1>详情展示</h1>
+      <div className="page-detail" onScroll={this.handleScroll}>
+        <Bar fn1={this.handleCollect.bind(this)}></Bar>
+        <span className="back iconfont icon-fanhui" onClick={this.goBack}></span>
+        <h1 style={{ opacity: opacity }}>详情展示</h1>
         <Carousel autoplay>
           {imglist.map((item, index) => {
             return (
@@ -119,8 +173,83 @@ class Detail extends React.PureComponent {
       </div>
     );
   }
+
+  // 滚动条处理
+  handleScroll = e => {
+    let target = e.target;
+    let scrollTop = target.scrollTop;
+    if (scrollTop > 120) {
+      this.setState({
+        opacity: 1,
+      });
+    } else if (scrollTop > 0) {
+      this.setState({
+        opacity: 0.5,
+      });
+    } else if (scrollTop === 0) {
+      this.setState({
+        opacity: 0,
+      });
+    }
+  };
   componentDidMount() {
     this.getimglist();
+    let dom = document.getElementById('root');
+    dom.addEventListener('scroll', this.handleScroll);
   }
 }
-export default Detail;
+export default connect(
+  null,
+  dispatch => ({
+    handleCollect() {
+      let userInfo = window.localStorage.getItem('userInfo');
+      if (userInfo) {
+        //用户名存在
+        userInfo = JSON.parse(userInfo);
+        let collect = window.localStorage.getItem(`${userInfo.username}love`);
+        let id = this.props.location.query.id;
+        let obj = {
+          imglist: this.state.imglist,
+          price: this.state.price,
+          time: this.state.time,
+          title: this.state.title,
+          id,
+        };
+        if (!collect) {
+          // 没有收藏过
+          let arr = [obj];
+          window.localStorage.setItem(`${userInfo.username}love`, JSON.stringify(arr));
+          dispatch({
+            type: 'collect/detail',
+            collect: arr,
+          });
+        } else {
+          // 收藏过
+          console.log(1);
+          let arr = JSON.parse(collect);
+          var flag = false;
+          arr.forEach(item => {
+            if (item.id === obj.id) {
+              flag = false;
+              return;
+            } else {
+              flag = true;
+            }
+          });
+          console.log(flag);
+          if (flag) {
+            console.log('jinla');
+            arr.push(obj);
+            window.localStorage.setItem(`${userInfo.username}love`, JSON.stringify(arr));
+            dispatch({
+              type: 'collect/detail',
+              collect: arr,
+            });
+          }
+        }
+      } else {
+        alert('你还没有登入');
+      }
+    },
+  }),
+)(Detail);

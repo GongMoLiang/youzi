@@ -12,7 +12,7 @@ class Bar extends PureComponent {
           <span className="iconfont icon-xiaoxi1"></span>
           <span>评论</span>
         </li>
-        <li>
+        <li onClick={this.props.fn1}>
           <span className="iconfont icon-shoucang1"></span>
           <span>收藏</span>
         </li>
