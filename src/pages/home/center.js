@@ -3,40 +3,90 @@ import './center.less';
 import photo from '../../assets/photo.png';
 import Link from 'umi/link';
 import { connect } from 'dva';
+import { Modal } from 'antd';
 
 const toolBarList = [
-  { icon: 'icon-shoucang', title: '我的收藏' },
-  { icon: 'icon-youhuiquan', title: '优惠券' },
-  { icon: 'icon-icon-test', title: '个人资料' },
-  { icon: 'icon-qiandao', title: '签到记录' },
-  { icon: 'icon-ditu', title: '收获地址' },
-  { icon: 'icon-xiaoxi', title: '消息中心' },
-  { icon: 'icon-fabu', title: '发布商品' },
-  { icon: 'icon-shangpin1', title: '我的商品' },
-  { icon: 'icon-weirenzheng', title: '未认证' },
-  { icon: 'icon-biaoqian', title: '开通学校' },
-  { icon: 'icon-changyongtubiao-mianxing-', title: '发布求购' },
-  { icon: 'icon-shangpin', title: '我的求购' },
+  { icon: 'icon-shoucang', title: '我的收藏', link: '/collect' },
+  { icon: 'icon-youhuiquan', title: '优惠券', link: '/coupon' },
+  { icon: 'icon-icon-test', title: '个人资料', link: '/setting' },
+  { icon: 'icon-qiandao', title: '签到记录', link: '/collect' },
+  { icon: 'icon-ditu', title: '收获地址', link: '/collect' },
+  { icon: 'icon-xiaoxi', title: '消息中心', link: '/collect' },
+  { icon: 'icon-fabu', title: '发布商品', link: '/collect' },
+  { icon: 'icon-shangpin1', title: '我的商品', link: '/collect' },
+  { icon: 'icon-weirenzheng', title: '未认证', link: '/collect' },
+  { icon: 'icon-biaoqian', title: '开通学校', link: '/collect' },
+  { icon: 'icon-changyongtubiao-mianxing-', title: '发布求购', link: '/collect' },
+  { icon: 'icon-shangpin', title: '我的求购', link: '/collect' },
 ];
 
 class Category extends React.Component {
+  userInfo = this.props.userInfo;
   state = {
     arrived: false,
+    visible: false,
+    grade: 0,
   };
+
+  //是否签到
   isArrived = () => {
-    //是否签到
+    if (this.userInfo) {
+      this.setState({
+        arrived: true,
+        grade: 10,
+      });
+    } else {
+      this.setState({
+        visible: true,
+      });
+    }
+  };
+
+  //点击li判断是否登录
+  handleIsLogin = (index, e) => {
+    if (this.userInfo) {
+      let link = toolBarList[index].link;
+      this.props.history.push(link);
+    } else {
+      this.setState({
+        visible: true,
+      });
+    }
+  };
+  //没有登录，点击确定去登录
+  handleOk = () => {
+    console.log(this.props);
+    this.props.history.replace('/login');
     this.setState({
-      arrived: true,
+      visible: false,
     });
   };
+  //没有登录，点击取消
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+  //点击头部设置
+  Setting = () => {
+    this.props.history.replace('/setting');
+  };
+
   render() {
-    console.log(this.props.userInfo);
-    const userInfo = this.props.userInfo;
+    let userInfo = this.props.userInfo;
     const username = userInfo ? userInfo.username : '';
     return (
       <div className="center-page">
+        <Modal
+          title="您还没有登录"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <p>现在去登录</p>
+        </Modal>
         {/* 设置 */}
-        <div className="head">
+        <div className="head" onClick={this.Setting}>
           <i className="iconfont icon-shezhi"></i>
         </div>
 
@@ -78,7 +128,7 @@ class Category extends React.Component {
         <div className="joinbar">
           <ul>
             <li>
-              <i>0</i>
+              <i>{this.state.grade}</i>
               <p>积分</p>
             </li>
             <li>
@@ -101,9 +151,9 @@ class Category extends React.Component {
           <div className="tool">
             <h1>我的工具栏</h1>
             <ul>
-              {toolBarList.map(item => {
+              {toolBarList.map((item, index) => {
                 return (
-                  <li key={item.title}>
+                  <li key={item.title} onClick={e => this.handleIsLogin(index, e)}>
                     <i className={`iconfont ${item.icon}`}></i>
                     <p>{item.title}</p>
                   </li>
@@ -119,7 +169,6 @@ class Category extends React.Component {
 
 export default connect(
   state => {
-    // console.log(state);
     return {
       userInfo: state.global.userInfo,
     };
