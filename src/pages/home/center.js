@@ -27,7 +27,6 @@ let date = d.getDate();
 let today = year + '' + month + '' + date;
 
 class Category extends React.Component {
-  userInfo = this.props.userInfo;
   state = {
     arrived: false,
     visible: false,
@@ -36,8 +35,9 @@ class Category extends React.Component {
 
   //是否签到
   isArrived = () => {
-    if (this.userInfo) {
-      cookie.save(`${this.userInfo.username}Arrived`, `${this.userInfo.username}Arrived` + today);
+    let userInfo = this.props.userInfo;
+    if (userInfo) {
+      cookie.save(`${userInfo.username}Arrived`, `${userInfo.username}Arrived` + today);
       this.setState({
         arrived: true,
         grade: 10,
@@ -49,13 +49,14 @@ class Category extends React.Component {
     }
   };
   componentDidMount() {
+    let userInfo = this.props.userInfo;
     // 判断cookie是否有更新，从而判断是否有签到
-    if (this.userInfo) {
-      let cookieNow = cookie.load(`${this.userInfo.username}Arrived`);
-      let todayCookie = `${this.userInfo.username}Arrived` + today;
+    if (userInfo) {
+      let cookieNow = cookie.load(`${userInfo.username}Arrived`);
+      let todayCookie = `${userInfo.username}Arrived` + today;
       if (todayCookie !== cookieNow) {
         if (cookieNow) {
-          cookie.remove(`${this.userInfo.username}Arrived`);
+          cookie.remove(`${userInfo.username}Arrived`);
           this.setState({
             arrived: false,
           });
@@ -75,7 +76,7 @@ class Category extends React.Component {
 
   //点击li判断是否登录
   handleIsLogin = (index, e) => {
-    if (this.userInfo) {
+    if (this.props.userInfo) {
       let link = toolBarList[index].link;
       this.props.history.push(link, toolBarList[index]);
     } else {
@@ -104,7 +105,7 @@ class Category extends React.Component {
   };
 
   render() {
-    let userInfo = this.props.userInfo;
+    let userInfo = window.localStorage.getItem('userInfo');
     const username = userInfo ? userInfo.username : '';
     return (
       <div className="center-page">
@@ -201,6 +202,7 @@ class Category extends React.Component {
 
 export default connect(
   state => {
+    console.log(state);
     return {
       userInfo: state.global.userInfo,
     };
