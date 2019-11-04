@@ -27,12 +27,16 @@ class Home extends React.PureComponent {
     });
   }
 
+  goSchool = () => {
+    this.props.history.push('/school');
+  };
+
   render() {
     const { bannerList, categoryList } = this.state;
     return (
       <div className="page_home">
         <div className="home_header">
-          <div className="school">
+          <div className="school" onClick={this.goSchool}>
             <i className="iconfont icon-location"></i>
             <span>所有学校</span>
           </div>
