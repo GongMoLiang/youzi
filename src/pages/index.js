@@ -31,6 +31,10 @@ class Home extends React.PureComponent {
     this.props.history.push('/school');
   };
 
+  goCoupon = () => {
+    this.props.history.push('./coupon');
+  };
+
   render() {
     const { bannerList, categoryList } = this.state;
     return (
@@ -70,7 +74,7 @@ class Home extends React.PureComponent {
         <div className="welfare">
           <h2>福利专区</h2>
           <div className="welfareList">
-            <div className="area">
+            <div className="area" onClick={this.goCoupon}>
               <div className="area_content">
                 <div className="title">
                   <h3>优惠券</h3>
