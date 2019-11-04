@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.less';
 import { Input, Carousel } from 'antd';
+import Product from '../Components/product/product.js';
 import axios from 'axios';
 
 import Logo1 from '../assets/1.png';
@@ -13,6 +14,7 @@ class Home extends React.PureComponent {
   state = {
     bannerList: [],
     categoryList: [],
+    like: [],
   };
 
   //获取数据
@@ -23,6 +25,7 @@ class Home extends React.PureComponent {
       this.setState({
         bannerList: result.data.banner,
         categoryList: result.data.menus,
+        like: result.data.like,
       });
     });
   }
@@ -31,8 +34,12 @@ class Home extends React.PureComponent {
     this.props.history.push('/school');
   };
 
+  goCoupon = () => {
+    this.props.history.push('./coupon');
+  };
+
   render() {
-    const { bannerList, categoryList } = this.state;
+    const { bannerList, categoryList, like } = this.state;
     return (
       <div className="page_home">
         <div className="home_header">
@@ -70,7 +77,7 @@ class Home extends React.PureComponent {
         <div className="welfare">
           <h2>福利专区</h2>
           <div className="welfareList">
-            <div className="area">
+            <div className="area" onClick={this.goCoupon}>
               <div className="area_content">
                 <div className="title">
                   <h3>优惠券</h3>
@@ -138,6 +145,11 @@ class Home extends React.PureComponent {
             <img src={Hua} alt="" />
           </div>
         </div>
+        <ul>
+          {like.map((item, index) => {
+            return <Product obj={item} key={index}></Product>;
+          })}
+        </ul>
       </div>
     );
   }
