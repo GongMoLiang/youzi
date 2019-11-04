@@ -6,6 +6,7 @@ import { connect } from 'dva';
 import { Modal } from 'antd';
 import cookie from 'react-cookies';
 
+const { confirm } = Modal;
 const toolBarList = [
   { icon: 'icon-shoucang', title: '我的收藏', link: '/collect' },
   { icon: 'icon-youhuiquan', title: '优惠券', link: '/coupon' },
@@ -43,6 +44,8 @@ class Category extends React.Component {
         grade: 10,
       });
       cookie.save(`${username}Arrived`, `${username}Arrived` + today);
+    } else {
+      this.showLogin();
     }
   };
   componentDidMount() {
@@ -64,33 +67,27 @@ class Category extends React.Component {
       });
     }
   }
-
+  showLogin = () => {
+    confirm({
+      title: '您还没有登录',
+      content: '点击确定，跳转到登录页面',
+      onOk: () => {
+        this.props.history.push('/login');
+      },
+      onCancel() {},
+    });
+  };
   //点击li判断是否登录
   handleIsLogin = (index, e) => {
     if (this.props.userInfo) {
       let link = toolBarList[index].link;
       this.props.history.push(link, toolBarList[index]);
     } else {
-      this.setState({
-        visible: true,
-      });
+      this.showLogin();
     }
   };
-  //没有登录，点击确定去登录
-  handleOk = () => {
-    // console.log(this.props);
-    this.props.history.push('/login');
-    this.setState({
-      visible: false,
-    });
-  };
-  //没有登录，点击取消
-  handleCancel = () => {
-    this.setState({
-      visible: false,
-    });
-  };
-  //点击头部设置
+
+  //点击头部设置，去到设置页面
   Setting = () => {
     this.props.history.push('/setting');
   };
@@ -102,15 +99,6 @@ class Category extends React.Component {
     let username = userInfo ? userInfo.username : '';
     return (
       <div className="center-page">
-        {/* 未登录弹出层 */}
-        <Modal
-          title="您还没有登录"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-        >
-          <p>现在去登录</p>
-        </Modal>
         {/* 设置 */}
         <div className="head" onClick={this.Setting}>
           <i className="iconfont icon-shezhi"></i>
@@ -124,13 +112,13 @@ class Category extends React.Component {
             </div>
             <div className="signin-right">
               <div className={userInfo ? 'login_hidden' : 'login_show'}>
-                <p>
+                <h2>
                   <Link to="/login">请登录</Link>
-                </p>
+                </h2>
                 <p>登录更精彩</p>
               </div>
               <div className={userInfo ? 'login_show' : 'login_hidden'}>
-                <p>欢迎你 , {username}</p>
+                <h2>欢迎你 , {username}</h2>
                 <p>懒得连签名都没有~</p>
               </div>
             </div>

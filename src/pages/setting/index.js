@@ -37,7 +37,7 @@ class Setting extends React.PureComponent {
             <i className="iconfont icon-fanhui"></i>
           </div>
           <div className="title">
-            <span>设置</span>
+            <span>设 置</span>
           </div>
         </div>
         <div className="settingContent">
