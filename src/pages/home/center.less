@@ -5,7 +5,7 @@
     height: 1.333333rem;
     background: #f06c7a;
     text-align: right;
-    padding: 0 4%;
+    padding: 0 0.533333rem;
     line-height: 1.333333rem;
     i {
       color: #fff;
@@ -14,45 +14,60 @@
     }
   }
   // 登录
-  .signin {
-    padding: 0 4%;
+  .signin-bar {
+    width: 100%;
     height: 3.626667rem;
     background: #f06c7a;
     border-radius: 0 0 0.4rem 0.4rem;
-    display: flex;
-    .signin-left {
-      width: 2.08rem;
-      height: 2.08rem;
-      margin-right: 0.266667rem;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .signin-right {
+    .signin {
+      padding: 0.133333rem 0.533333rem;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 2.08rem;
-      a {
-        font-size: 0.48rem;
-        color: #fff;
-        margin-bottom: 0.266667rem;
+      align-items: flex-start;
+      .signin-left {
+        width: 2.08rem;
+        height: 2.08rem;
+        margin-right: 0.266667rem;
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
-      p {
-        color: #eee;
-        font-size: 0.373333rem;
+      .signin-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 2.08rem;
+
+        .login_hidden {
+          display: none;
+        }
+        .login_show {
+          display: block;
+        }
+        a {
+          font-size: 0.48rem;
+          color: #fff;
+        }
+        p {
+          margin-top: 0.266667rem;
+          color: #eee;
+          font-size: 0.373333rem;
+        }
       }
     }
   }
+
   // 签到
   .place {
-    > div {
-      margin: -0.88rem auto 0.266667rem auto;
-      width: 76%;
+    .login_hidden {
+      display: none;
+    }
+    .login_show {
+      display: block;
+      margin: -0.88rem 1.066667rem 0.266667rem 1.066667rem;
       height: 1.6rem;
       line-height: 1.6rem;
-      padding: 0 4%;
+      padding: 0 0.533333rem;
       display: flex;
       align-items: center;
       background: linear-gradient(270deg, #dea96d 0, #f6d59b);
@@ -83,16 +98,17 @@
 
   //积分
   .joinbar {
-    width: 84%;
-    height: 1.6rem;
-    margin: 0.8rem 4% 0.8rem 4%;
-    padding: 0.4rem 4% 0.4rem 4%;
-    background-color: #fff;
-    box-shadow: 0px 0px 0.32rem rgba(0, 0, 0, 0.1);
-    border-radius: 0.186667rem;
+    margin: 0.533333rem 0;
+    width: 100%;
+    height: 2.133333rem;
     ul {
       display: flex;
       align-items: center;
+      justify-content: center;
+      margin: 0 0.533333rem;
+      padding: 0 0.533333rem;
+      box-shadow: 0px 0px 0.32rem rgba(0, 0, 0, 0.1);
+      border-radius: 0.186667rem;
       height: 100%;
       li {
         flex: 1;
@@ -112,36 +128,38 @@
 
   //工具栏
   .toolbar {
-    width: 92%;
-    margin: 0.8rem 4% 0.8rem 4%;
-    padding: 0 0 0.266667rem 0;
-    background: #fff;
-    box-shadow: 0px 0px 0.32rem rgba(0, 0, 0, 0.1);
-    border-radius: 0.186667rem;
-    h1 {
-      padding-top: 0.133333rem;
-      margin: 0 0 0.133333rem 3%;
-      font-size: 0.426667rem;
-      height: 1.066667rem;
-    }
-    ul {
-      display: flex;
-      flex-wrap: wrap;
-      li {
-        width: 25%;
+    width: 100%;
+    .tool {
+      width: 92%;
+      margin: 0.8rem 4% 0.8rem 4%;
+      padding: 0 0 0.266667rem 0;
+      box-shadow: 0px 0px 0.32rem rgba(0, 0, 0, 0.1);
+      border-radius: 0.186667rem;
+      h1 {
+        padding-top: 0.133333rem;
+        margin: 0 0 0.133333rem 3%;
+        font-size: 0.426667rem;
+        height: 1.066667rem;
+      }
+      ul {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 0.4rem;
-        i {
-          font-size: 0.853333rem;
-          color: #ff4301;
-        }
-        p {
-          margin-top: 0.133333rem;
-          color: #3d3d3d;
-          font-size: 0.373333rem;
+        flex-wrap: wrap;
+        li {
+          width: 25%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 0.4rem;
+          i {
+            font-size: 0.853333rem;
+            color: #ff4301;
+          }
+          p {
+            margin-top: 0.133333rem;
+            color: #3d3d3d;
+            font-size: 0.373333rem;
+          }
         }
       }
     }

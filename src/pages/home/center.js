@@ -20,8 +20,19 @@ const toolBarList = [
 ];
 
 class Category extends React.Component {
+  state = {
+    arrived: false,
+  };
+  isArrived = () => {
+    //是否签到
+    this.setState({
+      arrived: true,
+    });
+  };
   render() {
-    // console.log(this.props.userInfo);
+    console.log(this.props.userInfo);
+    const userInfo = this.props.userInfo;
+    const username = userInfo ? userInfo.username : '';
     return (
       <div className="center-page">
         {/* 设置 */}
@@ -30,22 +41,36 @@ class Category extends React.Component {
         </div>
 
         {/* 登录 */}
-        <div className="signin">
-          <div className="signin-left">
-            <img src={photo} alt="" />
-          </div>
-          <div className="signin-right">
-            <Link to="/login">请登录</Link>
-            <p>登录更精彩</p>
+        <div className="signin-bar">
+          <div className="signin">
+            <div className="signin-left">
+              <img src={photo} alt="" />
+            </div>
+            <div className="signin-right">
+              <div className={userInfo ? 'login_hidden' : 'login_show'}>
+                <p>
+                  <Link to="/login">请登录</Link>
+                </p>
+                <p>登录更精彩</p>
+              </div>
+              <div className={userInfo ? 'login_show' : 'login_hidden'}>
+                <p>欢迎你 , {username}</p>
+                <p>懒得连签名都没有~</p>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* 签到 */}
         <div className="place">
-          <div>
+          <div className={this.state.arrived === false ? 'login_show' : 'login_hidden'}>
             <i className="iconfont icon-zb"></i>
             <p>您今天尚未签到</p>
-            <span>签到</span>
+            <span onClick={this.isArrived}>签到</span>
+          </div>
+          <div className={this.state.arrived === false ? 'login_hidden' : 'login_show'}>
+            <i className="iconfont icon-zb"></i>
+            <p>您今天已签到</p>
           </div>
         </div>
 
@@ -73,17 +98,19 @@ class Category extends React.Component {
 
         {/* 工具栏 */}
         <div className="toolbar">
-          <h1>我的工具栏</h1>
-          <ul>
-            {toolBarList.map(item => {
-              return (
-                <li key={item.title}>
-                  <i className={`iconfont ${item.icon}`}></i>
-                  <p>{item.title}</p>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="tool">
+            <h1>我的工具栏</h1>
+            <ul>
+              {toolBarList.map(item => {
+                return (
+                  <li key={item.title}>
+                    <i className={`iconfont ${item.icon}`}></i>
+                    <p>{item.title}</p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     );
@@ -92,8 +119,9 @@ class Category extends React.Component {
 
 export default connect(
   state => {
+    // console.log(state);
     return {
-      userInfo: state.userInfo,
+      userInfo: state.global.userInfo,
     };
   },
   null,
