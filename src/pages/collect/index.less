@@ -1,0 +1,77 @@
+.collect-page {
+  display: flex;
+  flex-direction: column;
+  .head {
+    height: 1.173333rem;
+    background: #f06c7a;
+    padding: 0.186667rem 0.08rem;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+
+    i {
+      width: 0.8rem;
+      font-size: 0.56rem;
+      color: #fff;
+    }
+    p {
+      flex: 1;
+      margin-right: 0.8rem;
+      font-size: 0.426667rem;
+      color: #fff;
+      font-weight: bolder;
+      text-align: center;
+      line-height: 1.173333rem;
+    }
+  }
+  ul {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.266667rem 0.8rem 0.266667rem 0.533333rem;
+    li {
+      display: flex;
+      height: 2.666667rem;
+      padding: 0.266667rem 0;
+      border-bottom: 0.026667rem solid #dedede;
+
+      .goodsImg {
+        flex-shrink: 0;
+        margin-right: 0.266667rem;
+        width: 2.666667rem;
+        height: 2.666667rem;
+        img {
+          width: 100%;
+        }
+      }
+
+      .center {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+        p {
+          font-size: 0.426667rem;
+        }
+        span {
+          font-size: 0.32rem;
+          color: #999;
+        }
+      }
+
+      .right {
+        flex-shrink: 0;
+        width: 1.066667rem;
+        display: flex;
+        align-items: flex-end;
+        justify-content: right;
+        margin-left: 0.266667rem;
+        p {
+          font-size: 0.426667rem;
+          color: #f06c7a;
+          text-align: right;
+        }
+      }
+    }
+  }
+}

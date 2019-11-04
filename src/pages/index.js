@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.less';
 import { Input, Carousel } from 'antd';
+import Product from '../Components/product/product.js';
 import axios from 'axios';
 
 import Logo1 from '../assets/1.png';
@@ -13,6 +14,7 @@ class Home extends React.PureComponent {
   state = {
     bannerList: [],
     categoryList: [],
+    like: [],
   };
 
   //获取数据
@@ -23,6 +25,7 @@ class Home extends React.PureComponent {
       this.setState({
         bannerList: result.data.banner,
         categoryList: result.data.menus,
+        like: result.data.like,
       });
     });
   }
@@ -31,8 +34,16 @@ class Home extends React.PureComponent {
     this.props.history.push('/school');
   };
 
+  goCoupon = () => {
+    this.props.history.push('./coupon');
+  };
+
+  goSearch = () => {
+    this.props.history.push('./search');
+  };
+
   render() {
-    const { bannerList, categoryList } = this.state;
+    const { bannerList, categoryList, like } = this.state;
     return (
       <div className="page_home">
         <div className="home_header">
@@ -41,9 +52,18 @@ class Home extends React.PureComponent {
             <span>所有学校</span>
           </div>
           <div className="search">
-            <Input placeholder="输入关键字" suffix={<i className="iconfont icon-sousuo"></i>} />
+            <Input
+              placeholder="输入关键字"
+              suffix={<i className="iconfont icon-sousuo"></i>}
+              onClick={this.goSearch}
+            />
           </div>
-          <div className="message">
+          <div
+            className="message"
+            onClick={() => {
+              this.props.history.push('/message');
+            }}
+          >
             <i className="iconfont icon-xiaoxi"></i>
           </div>
         </div>
@@ -59,7 +79,7 @@ class Home extends React.PureComponent {
         <div className="category">
           <ul>
             {categoryList.map(product => (
-              <li>
+              <li className="categoryList" key={product.id}>
                 <img src={product.pic} alt="" />
                 <span>{product.name}</span>
               </li>
@@ -70,7 +90,7 @@ class Home extends React.PureComponent {
         <div className="welfare">
           <h2>福利专区</h2>
           <div className="welfareList">
-            <div className="area">
+            <div className="area" onClick={this.goCoupon}>
               <div className="area_content">
                 <div className="title">
                   <h3>优惠券</h3>
@@ -137,6 +157,15 @@ class Home extends React.PureComponent {
             <span>热门推荐</span>
             <img src={Hua} alt="" />
           </div>
+        </div>
+        <ul className="productList">
+          {like.map((item, index) => {
+            return <Product obj={item} key={index}></Product>;
+          })}
+        </ul>
+
+        <div className="load_more">
+          <p>没有更多了</p>
         </div>
       </div>
     );
