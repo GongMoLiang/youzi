@@ -106,7 +106,7 @@ class Category extends React.Component {
 
   render() {
     let userInfo = window.localStorage.getItem('userInfo');
-    const username = userInfo ? userInfo.username : '';
+    const username = userInfo ? JSON.parse(userInfo).username : '';
     return (
       <div className="center-page">
         {/* 未登录弹出层 */}

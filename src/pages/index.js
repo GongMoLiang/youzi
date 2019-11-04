@@ -79,7 +79,7 @@ class Home extends React.PureComponent {
         <div className="category">
           <ul>
             {categoryList.map(product => (
-              <li className="categoryList">
+              <li className="categoryList" key={product.id}>
                 <img src={product.pic} alt="" />
                 <span>{product.name}</span>
               </li>

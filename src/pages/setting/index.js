@@ -1,3 +1,10 @@
+/**
+ * title: 设置
+ *
+ *
+ *
+ */
+
 import React from 'react';
 import './index.less';
 
@@ -8,7 +15,10 @@ class Setting extends React.PureComponent {
 
   goLogin = () => {
     this.props.history.push('./login');
-    // window.localStorage.remove('userInfo');
+  };
+  goQuit = () => {
+    window.localStorage.removeItem('userInfo');
+    this.props.history.push('/home/center');
   };
 
   render() {
@@ -67,9 +77,13 @@ class Setting extends React.PureComponent {
             </ul>
           </div>
         </div>
-        <div className="loginBtn" onClick={this.goLogin}>
-          <p className={userInfo ? 'login' : 'qiut'}>登 录</p>
-          <p className={userInfo ? 'quit' : 'login'}>退出登录</p>
+        <div className="loginBtn">
+          <p className={userInfo ? 'login' : 'qiut'} onClick={this.goLogin}>
+            登 录
+          </p>
+          <p className={userInfo ? 'quit' : 'login'} onClick={this.goQuit}>
+            退出登录
+          </p>
         </div>
       </div>
     );

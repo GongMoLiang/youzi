@@ -1,3 +1,10 @@
+/**
+ * title: 所有学校
+ *
+ *
+ *
+ */
+
 import React from 'react';
 import './index.less';
 import { Input } from 'antd';
