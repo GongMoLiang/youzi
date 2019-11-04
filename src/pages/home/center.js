@@ -9,15 +9,15 @@ const toolBarList = [
   { icon: 'icon-shoucang', title: '我的收藏', link: '/collect' },
   { icon: 'icon-youhuiquan', title: '优惠券', link: '/coupon' },
   { icon: 'icon-icon-test', title: '个人资料', link: '/setting' },
-  { icon: 'icon-qiandao', title: '签到记录', link: '/collect' },
-  { icon: 'icon-ditu', title: '收获地址', link: '/collect' },
-  { icon: 'icon-xiaoxi', title: '消息中心', link: '/collect' },
-  { icon: 'icon-fabu', title: '发布商品', link: '/collect' },
-  { icon: 'icon-shangpin1', title: '我的商品', link: '/collect' },
-  { icon: 'icon-weirenzheng', title: '未认证', link: '/collect' },
-  { icon: 'icon-biaoqian', title: '开通学校', link: '/collect' },
-  { icon: 'icon-changyongtubiao-mianxing-', title: '发布求购', link: '/collect' },
-  { icon: 'icon-shangpin', title: '我的求购', link: '/collect' },
+  { icon: 'icon-qiandao', title: '签到记录', link: '/others' },
+  { icon: 'icon-ditu', title: '收获地址', link: '/others' },
+  { icon: 'icon-xiaoxi', title: '消息中心', link: '/others' },
+  { icon: 'icon-fabu', title: '发布商品', link: '/others' },
+  { icon: 'icon-shangpin1', title: '我的商品', link: '/others' },
+  { icon: 'icon-weirenzheng', title: '未认证', link: '/others' },
+  { icon: 'icon-biaoqian', title: '开通学校', link: '/school' },
+  { icon: 'icon-changyongtubiao-mianxing-', title: '发布求购', link: '/others' },
+  { icon: 'icon-shangpin', title: '我的求购', link: '/others' },
 ];
 
 class Category extends React.Component {
@@ -46,7 +46,7 @@ class Category extends React.Component {
   handleIsLogin = (index, e) => {
     if (this.userInfo) {
       let link = toolBarList[index].link;
-      this.props.history.push(link);
+      this.props.history.push(link, toolBarList[index]);
     } else {
       this.setState({
         visible: true,
@@ -56,7 +56,7 @@ class Category extends React.Component {
   //没有登录，点击确定去登录
   handleOk = () => {
     console.log(this.props);
-    this.props.history.replace('/login');
+    this.props.history.push('/login');
     this.setState({
       visible: false,
     });
@@ -69,7 +69,7 @@ class Category extends React.Component {
   };
   //点击头部设置
   Setting = () => {
-    this.props.history.replace('/setting');
+    this.props.history.push('/setting');
   };
 
   render() {
