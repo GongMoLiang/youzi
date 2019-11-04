@@ -8,6 +8,7 @@ class Setting extends React.PureComponent {
 
   goLogin = () => {
     this.props.history.push('./login');
+    // window.localStorage.remove('userInfo');
   };
 
   render() {
