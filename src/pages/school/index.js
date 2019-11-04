@@ -122,7 +122,11 @@ class School extends React.PureComponent {
               <ul>
                 {schoolList.map(item => {
                   return (
-                    <li key={item.letter} onClick={this.zimu.bind(this, item.letter)}>
+                    <li
+                      className="zimuList"
+                      key={item.letter}
+                      onClick={this.zimu.bind(this, item.letter)}
+                    >
                       {item.letter}
                     </li>
                   );
