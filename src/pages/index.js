@@ -38,6 +38,10 @@ class Home extends React.PureComponent {
     this.props.history.push('./coupon');
   };
 
+  goSearch = () => {
+    this.props.history.push('./search');
+  };
+
   render() {
     const { bannerList, categoryList, like } = this.state;
     return (
@@ -48,9 +52,18 @@ class Home extends React.PureComponent {
             <span>所有学校</span>
           </div>
           <div className="search">
-            <Input placeholder="输入关键字" suffix={<i className="iconfont icon-sousuo"></i>} />
+            <Input
+              placeholder="输入关键字"
+              suffix={<i className="iconfont icon-sousuo"></i>}
+              onClick={this.goSearch}
+            />
           </div>
-          <div className="message">
+          <div
+            className="message"
+            onClick={() => {
+              this.props.history.push('/message');
+            }}
+          >
             <i className="iconfont icon-xiaoxi"></i>
           </div>
         </div>
@@ -66,7 +79,7 @@ class Home extends React.PureComponent {
         <div className="category">
           <ul>
             {categoryList.map(product => (
-              <li>
+              <li className="categoryList">
                 <img src={product.pic} alt="" />
                 <span>{product.name}</span>
               </li>
@@ -145,11 +158,15 @@ class Home extends React.PureComponent {
             <img src={Hua} alt="" />
           </div>
         </div>
-        <ul>
+        <ul className="productList">
           {like.map((item, index) => {
             return <Product obj={item} key={index}></Product>;
           })}
         </ul>
+
+        <div className="load_more">
+          <p>没有更多了</p>
+        </div>
       </div>
     );
   }
