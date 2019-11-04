@@ -7,6 +7,7 @@
 
 import React from 'react';
 import './index.less';
+import { connect } from 'dva';
 
 class Setting extends React.PureComponent {
   goCenter = () => {
@@ -17,8 +18,13 @@ class Setting extends React.PureComponent {
     this.props.history.push('./login');
   };
   goQuit = () => {
-    window.localStorage.removeItem('userInfo');
-    this.props.history.push('/home/center');
+    this.props.handleDelete(isOk => {
+      if (isOk) {
+        window.localStorage.removeItem('userInfo');
+        this.props.history.push('/home/center');
+      }
+    });
+    // this.props.history.push('/home/center');
   };
 
   render() {
@@ -90,4 +96,18 @@ class Setting extends React.PureComponent {
   }
 }
 
-export default Setting;
+// export default Setting;
+export default connect(
+  null,
+  dispatch => {
+    return {
+      handleDelete(callback) {
+        dispatch({
+          type: 'global/delete',
+          userInfo: null,
+        });
+        callback && callback(true);
+      },
+    };
+  },
+)(Setting);
