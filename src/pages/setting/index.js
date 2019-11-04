@@ -28,7 +28,7 @@ class Setting extends React.PureComponent {
   };
 
   render() {
-    const userInfo = window.localStorage.getItem('userInfo');
+    let userInfo = window.localStorage.getItem('userInfo');
 
     return (
       <div className="page_setting">

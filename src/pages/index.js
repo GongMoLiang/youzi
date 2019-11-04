@@ -42,6 +42,24 @@ class Home extends React.PureComponent {
     this.props.history.push('./search');
   };
 
+  goDetail(id) {
+    this.props.history.push({
+      pathname: '/goods',
+      query: {
+        sid: id,
+      },
+    });
+  }
+
+  goLikeDetail(id) {
+    this.props.history.push({
+      pathname: `/detail/${id}`,
+      query: {
+        id: id,
+      },
+    });
+  }
+
   render() {
     const { bannerList, categoryList, like } = this.state;
     return (
@@ -79,7 +97,11 @@ class Home extends React.PureComponent {
         <div className="category">
           <ul>
             {categoryList.map(product => (
-              <li className="categoryList" key={product.id}>
+              <li
+                className="categoryList"
+                key={product.id}
+                onClick={this.goDetail.bind(this, product.cid)}
+              >
                 <img src={product.pic} alt="" />
                 <span>{product.name}</span>
               </li>
@@ -160,7 +182,10 @@ class Home extends React.PureComponent {
         </div>
         <ul className="productList">
           {like.map((item, index) => {
-            return <Product obj={item} key={index}></Product>;
+            // console.log(item);
+            return (
+              <Product obj={item} key={index} fn={this.goLikeDetail.bind(this, item.id)}></Product>
+            );
           })}
         </ul>
 
