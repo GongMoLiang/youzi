@@ -34,4 +34,5 @@ export default {
     ],
   ],
   disableCSSModules: true,
+  history: 'hash',
 };

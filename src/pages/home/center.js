@@ -84,7 +84,14 @@ class Category extends React.Component {
   handleIsLogin = (index, e) => {
     if (this.props.userInfo) {
       let link = toolBarList[index].link;
-      this.props.history.push(link, toolBarList[index]);
+      let title = toolBarList[index].title;
+      this.props.history.push({
+        pathname: link,
+
+        query: {
+          title,
+        },
+      });
     } else {
       this.showLogin();
     }

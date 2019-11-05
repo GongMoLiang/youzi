@@ -7,11 +7,12 @@ class Others extends React.Component {
     this.props.history.goBack();
   };
   render() {
+    console.log(this.props);
     return (
       <div className="others-page">
         <div className="head">
           <i className="iconfont icon-fanhui" onClick={this.goHome}></i>
-          <p>{this.props.location.state.title}</p>
+          <p>{this.props.location.query.title}</p>
         </div>
         <div className="logo">
           <img src={logo} alt="" />
