@@ -18,7 +18,7 @@ class Home extends React.PureComponent {
     schoolname: '所有学校',
   };
   getschoolname() {
-    let name = this.props.location.query.title;
+    let name = this.props.location.state;
     name = name ? name.title : '所有学校';
     this.setState({
       schoolname: name,
