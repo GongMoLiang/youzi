@@ -87,7 +87,6 @@ class Category extends React.Component {
       let title = toolBarList[index].title;
       this.props.history.push({
         pathname: link,
-
         query: {
           title,
         },
