@@ -6,7 +6,9 @@ import Bar from '../../Components/footerfixed/fixed';
 import './style.less';
 import { Carousel } from 'antd';
 import { connect } from 'dva';
+import { Modal } from 'antd';
 import xiao from 'axios';
+const { confirm } = Modal;
 
 class Detail extends React.PureComponent {
   state = {
@@ -23,6 +25,16 @@ class Detail extends React.PureComponent {
     nickname: '',
     opacity: 0,
     color: '#8a8a8a',
+  };
+  showLogin = () => {
+    confirm({
+      title: '您还没有登录',
+      content: '点击确定，跳转到登录页面',
+      onOk: () => {
+        this.props.history.push('/login');
+      },
+      onCancel() {},
+    });
   };
   getimglist() {
     let id = this.props.location.query.id;
@@ -111,7 +123,7 @@ class Detail extends React.PureComponent {
         }
       }
     } else {
-      alert('你还没有登入');
+        this.showLogin()
     }
   }
 

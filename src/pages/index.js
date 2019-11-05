@@ -15,7 +15,15 @@ class Home extends React.PureComponent {
     bannerList: [],
     categoryList: [],
     like: [],
+    schoolname: '所有学校',
   };
+  getschoolname() {
+    let name = this.props.location.state;
+    name = name ? name.title : '所有学校';
+    this.setState({
+      schoolname: name,
+    });
+  }
 
   //获取数据
   getStateList() {
@@ -59,15 +67,17 @@ class Home extends React.PureComponent {
       },
     });
   }
-
+  goQiugou = () => {
+    this.props.history.push('/others', { title: '我的求购' });
+  };
   render() {
-    const { bannerList, categoryList, like } = this.state;
+    const { bannerList, categoryList, like, schoolname } = this.state;
     return (
       <div className="page_home">
         <div className="home_header">
           <div className="school" onClick={this.goSchool}>
             <i className="iconfont icon-location"></i>
-            <span>所有学校</span>
+            <span>{schoolname}</span>
           </div>
           <div className="search">
             <Input
@@ -79,7 +89,7 @@ class Home extends React.PureComponent {
           <div
             className="message"
             onClick={() => {
-              this.props.history.push('/message');
+              this.props.history.push('/others', { title: '我的消息' });
             }}
           >
             <i className="iconfont icon-xiaoxi"></i>
@@ -144,7 +154,7 @@ class Home extends React.PureComponent {
           <div className="welfareList">
             <div className="area">
               <div className="area_content">
-                <div className="title">
+                <div className="title" onClick={this.goQiugou}>
                   <h3>求购</h3>
                   <p>求购</p>
                 </div>
@@ -158,7 +168,12 @@ class Home extends React.PureComponent {
             </div>
             <div className="area">
               <div className="area_content">
-                <div className="title">
+                <div
+                  className="title"
+                  onClick={() => {
+                    this.props.history.push('/others', { title: '我的咨询' });
+                  }}
+                >
                   <h3>咨询</h3>
                   <p>最新动态</p>
                 </div>
@@ -198,6 +213,7 @@ class Home extends React.PureComponent {
 
   componentDidMount() {
     this.getStateList();
+    this.getschoolname();
   }
 }
 

@@ -75,7 +75,11 @@ class School extends React.PureComponent {
               <div className="shcool_index">
                 <p className="label">#</p>
                 <ul>
-                  <li>
+                  <li
+                    onClick={() => {
+                      this.props.history.push('/');
+                    }}
+                  >
                     <div className="schoolLogo">
                       <img src={Logo1} alt="" />
                     </div>
@@ -84,7 +88,11 @@ class School extends React.PureComponent {
                       <p>您将同时浏览所有学校的商品</p>
                     </div>
                   </li>
-                  <li>
+                  <li
+                    onClick={() => {
+                      this.props.history.push('/');
+                    }}
+                  >
                     <div className="schoolLogo">
                       <img src={Logo2} alt="" />
                     </div>
@@ -102,7 +110,12 @@ class School extends React.PureComponent {
                     <ul>
                       {item.list.map(schoolInfo => {
                         return (
-                          <li key={schoolInfo.id}>
+                          <li
+                            key={schoolInfo.id}
+                            onClick={() => {
+                              this.props.history.push('/', { title: schoolInfo.sub_title });
+                            }}
+                          >
                             <div className="schoolLogo">
                               <img src={schoolInfo.logo} alt="" />
                             </div>
