@@ -10,7 +10,7 @@ class Coupon extends React.PureComponent {
   getCoupon() {
     axios.get('https://api.youzixy.com/ebapi/coupons_api/get_issue_coupon_list').then(Response => {
       let result = Response.data;
-      console.log(result.data);
+      // console.log(result.data);
       this.setState({
         couponList: result.data,
       });

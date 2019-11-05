@@ -21,7 +21,6 @@ class Article extends React.PureComponent {
   getbannerlist() {
     axios.post('https://api.youzixy.com/ebapi/article_api/get_article_banner').then(response => {
       let result = response.data;
-      console.log(result);
       this.setState({
         bannerlist: result.data,
       });

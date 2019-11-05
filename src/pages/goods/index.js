@@ -1,3 +1,6 @@
+/*
+ * title: '商品列表'
+ */
 import React from 'react';
 import Product from '../../Components/product/product.js';
 import Topbar from '../../Components/topbar/tapbar.js';
@@ -9,7 +12,6 @@ class Goods extends React.PureComponent {
     goodslist2: [],
   };
   getgoodlist() {
-    console.log(this.props);
     axios
       .post('https://api.youzixy.com/ebapi/store_api/get_product_list', {
         keyword: '',

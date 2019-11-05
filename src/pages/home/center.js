@@ -1,3 +1,6 @@
+/*
+ * title: '个人中心'
+ */
 import React from 'react';
 import './center.less';
 import photo from '../../assets/photo.png';

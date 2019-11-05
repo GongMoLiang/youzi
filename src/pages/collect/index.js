@@ -10,33 +10,52 @@ import './index.less';
 import { connect } from 'dva';
 import Link from 'umi/link';
 
+// console.log(arr);
+
 class Collect extends React.Component {
   state = {
-    collectList: window.localStorage.getItem(`${this.props.userInfo.username}love`),
+    collectList: [],
   };
   goHome = () => {
     this.props.history.goBack();
   };
 
-  deleteCollect(id) {
-    let arr = JSON.parse(window.localStorage.getItem(`${this.props.userInfo.username}love`));
-    let index = arr.findIndex(item => {
-      return item.id === id;
+  getcollect() {
+    let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
+    var collect = window.localStorage.getItem(`${userInfo.username}love`);
+    collect = JSON.parse(collect);
+    // console.log(collect);
+    this.setState({
+      collectList: collect,
     });
-    arr.splice(index, 1);
+  }
+  deleteCollect(id, e) {
+    e.stopPropagation();
+    let userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
+    var arr = window.localStorage.getItem(`${userInfo.username}love`);
+    arr = JSON.parse(arr);
+    arr.forEach((item, index) => {
+      if (item.id === id) {
+        arr.splice(index, 1);
+      }
+    });
     if (arr.length > 0) {
-      window.localStorage.setItem(
-        `${this.props.userInfo.username}love`,
-        JSON.stringify(this.state.collectList),
-      );
+      window.localStorage.setItem(`${userInfo.username}love`, JSON.stringify(arr));
     } else {
-      window.localStorage.removeItem(`${this.props.userInfo.username}love`);
+      window.localStorage.removeItem(`${userInfo.username}love`);
     }
     this.setState({
       collectList: arr,
     });
   }
-
+  handleToDetail(id) {
+    this.props.history.push({
+      pathname: `/detail/${id}`,
+      query: {
+        id: id,
+      },
+    });
+  }
   render() {
     if (this.state.collectList) {
       return (
@@ -46,9 +65,9 @@ class Collect extends React.Component {
             <p>我的收藏</p>
           </div>
           <ul>
-            {JSON.parse(this.state.collectList).map(item => {
+            {this.state.collectList.map(item => {
               return (
-                <li key={item.id} onClick={this.handleToDetail}>
+                <li key={item.id} onClick={this.handleToDetail.bind(this, item.id)}>
                   <div className="goodsImg">
                     <img src={item.imglist[0]} alt="" />
                   </div>
@@ -82,6 +101,9 @@ class Collect extends React.Component {
         </div>
       );
     }
+  }
+  componentDidMount() {
+    this.getcollect();
   }
 }
 

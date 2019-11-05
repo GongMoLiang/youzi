@@ -54,10 +54,12 @@ class Detail extends React.PureComponent {
     this.props.history.goBack();
   };
 
-  处理收藏;
+  goHome() {
+    this.props.history.push('/');
+  }
+  // 处理收藏;
   handleCollect() {
     let userInfo = window.localStorage.getItem('userInfo');
-    // console.log(userInfo);
     if (userInfo) {
       //用户名存在
       userInfo = JSON.parse(userInfo);
@@ -89,9 +91,7 @@ class Detail extends React.PureComponent {
               color: '#8a8a8a',
             });
             arr.splice(index, 1);
-            console.log(arr.length);
             if (arr === []) {
-              console.log(1);
               window.localStorage.removeItem(`${userInfo.username}love}`);
             } else {
               window.localStorage.setItem(`${userInfo.username}love`, JSON.stringify(arr));
@@ -122,11 +122,9 @@ class Detail extends React.PureComponent {
     if (userInfo) {
       userInfo = JSON.parse(userInfo);
       let str = window.localStorage.getItem(`${userInfo.username}love`);
-      console.log(str);
       if (str) {
         let id = this.props.location.query.id;
         let arr = JSON.parse(str);
-        console.log(arr);
         arr.forEach(item => {
           if (item.id === id) {
             this.setState({
@@ -157,7 +155,7 @@ class Detail extends React.PureComponent {
     } = this.state;
     return (
       <div className="page-detail" onScroll={this.handleScroll}>
-        <Bar fn1={this.handleCollect.bind(this)} color={color}></Bar>
+        <Bar fn1={this.handleCollect.bind(this)} color={color} fn3={this.goHome.bind(this)}></Bar>
         <span className="back iconfont icon-fanhui" onClick={this.goBack}></span>
         <h1 style={{ opacity: opacity }}>详情展示</h1>
         <Carousel autoplay>

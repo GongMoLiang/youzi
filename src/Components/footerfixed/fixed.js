@@ -4,7 +4,7 @@ class Bar extends PureComponent {
   render() {
     return (
       <ul className="fixed">
-        <li>
+        <li onClick={this.props.fn3}>
           <span className="iconfont icon-1"></span>
           <span>首页</span>
         </li>
